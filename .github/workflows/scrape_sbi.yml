@@ -1,14 +1,14 @@
 name: Check SBI Amazon Offers
 
 on:
-  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+  workflow_dispatch:
 
 jobs:
   check-offers:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Playwright & Dependencies
+      - name: Install Dependencies & Chromium
         run: |
           pip install playwright
           playwright install --with-deps chromium
@@ -24,7 +24,7 @@ jobs:
       - name: Run Scraper
         run: python check_offers.py
 
-      - name: Upload Results
+      - name: Upload Verified Links Artifact
         uses: actions/upload-artifact@v4
         with:
           name: sbi-eligible-links
